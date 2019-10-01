@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">Games Heap</string>
+
+    <string name="xbox_one">XONE</string>
+    <string name="ps4">PS4</string>
+    <string name="pc">PC</string>
+    <string name="ios">iOS</string>
+    <string name="android">Android</string>
+
+    <string name="lorem">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum non velit sed felis mattis fringilla. Vivamus luctus, arcu et hendrerit commodo, ipsum lacus vestibulum odio, at luctus tortor erat vestibulum enim. Nam suscipit nisi sit amet libero elementum volutpat. Integer et nisl vitae ipsum cursus gravida. Donec bibendum, tellus lacinia luctus interdum, ex nisl tristique lectus, nec rhoncus purus purus at neque. Donec lacinia laoreet purus, non lobortis lacus vulputate sed. In cursus eros ac tellus auctor auctor. Suspendisse vel malesuada risus. Proin tristique quam ac aliquam suscipit. Quisque ultricies tellus eget ex interdum luctus. Morbi vel quam urna. Aliquam commodo turpis at felis rutrum, vitae laoreet justo dictum. Nunc lacinia arcu velit, a hendrerit purus semper faucibus.
+Nunc cursus justo at lorem elementum, commodo eleifend eros ultrices. Aenean enim orci, cursus et quam vel, vulputate cursus diam. Integer placerat dui nunc, sed gravida nulla bibendum et. Duis blandit ut erat ullamcorper rhoncus. In eget sagittis neque, ut scelerisque elit. Suspendisse elit mi, luctus non eleifend quis, pretium sodales elit. Mauris nec tristique felis, id malesuada neque. Nunc laoreet volutpat eros eu viverra.
+Vestibulum vehicula risus tristique eros dapibus rhoncus. Fusce fringilla erat ut leo feugiat, at eleifend elit interdum. Morbi varius sed velit sit amet malesuada. Nulla finibus magna id erat dictum scelerisque. Aenean ac efficitur turpis. Aliquam ac pharetra sem. Fusce venenatis ligula at faucibus consectetur. Nam eleifend fermentum leo, sit amet condimentum nulla blandit vitae. Quisque mollis luctus mollis. Nullam vestibulum porttitor dapibus. Maecenas feugiat commodo tempus. Vestibulum egestas magna sed sapien tempus, ac vehicula ex pharetra. Integer a viverra urna. Maecenas tempus leo ac nisi egestas, sed auctor mi iaculis. Donec tristique tellus at nisi venenatis fermentum. Nam porta bibendum eros vitae porttitor.
+Etiam ut eros volutpat, faucibus quam sit amet, viverra libero. Suspendisse finibus ut turpis in pharetra. Duis et mauris sollicitudin sem fermentum tempus in non justo. Fusce tincidunt enim bibendum, bibendum lacus a, viverra tellus. Fusce varius turpis nec risus condimentum, ac vehicula felis pulvinar. Donec a consequat nunc. Proin vulputate cursus egestas. Fusce commodo feugiat placerat. Donec rhoncus rhoncus odio, ac euismod lacus volutpat a. Mauris lorem ligula, faucibus vitae cursus in, maximus eu urna. Suspendisse potenti. Vestibulum pharetra viverra sapien venenatis mattis. Quisque id suscipit odio. Morbi sed neque augue. Integer euismod enim nisl, eu interdum odio aliquet et. Proin pretium vitae tortor at egestas.
+Proin cursus tellus euismod metus mollis, et viverra risus pharetra. Nullam consequat maximus dignissim. Donec ac elit eu leo ornare malesuada vel id magna. Cras in neque vitae elit ornare sagittis. Donec fringilla velit in dictum placerat. Quisque quis erat leo. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque faucibus, orci eu dapibus tristique, libero lacus facilisis tellus, a condimentum magna libero eget nisi. Praesent gravida porta accumsan. Fusce sollicitudin erat vitae fermentum hendrerit. Curabitur scelerisque aliquam mi vel mattis.</string>
+
+    <string name="from_year_filter">From</string>
+    <string name="to_year_filter">To</string>
+    <string name="action_filters">Filter</string>
+    <string name="action_search">Search</string>
+    <string name="search_hint">Search game</string>
+    <string name="item_name">Name</string>
+    <string name="release_label">Release</string>
+    <string name="release_empty">Unknown</string>
+    <string name="platforms_label">Platforms</string>
+    <string name="platforms_empty">Unknown</string>
+    <string name="desciption_empty">Nothing known about the game</string>
+    <string name="gamelist_img_description">Main image of the game</string>
+
+</resources>

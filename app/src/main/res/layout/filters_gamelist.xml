@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/filters_gamelist"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="bottom"
+    android:elevation="4dp"
+    android:padding="@dimen/margin_vertical_basic"
+    app:behavior_hideable="true"
+    app:behavior_peekHeight="0dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
+    tools:showIn="@layout/content_gamelist">
+
+    <com.google.android.material.chip.ChipGroup
+        android:id="@+id/games_filter_platforms"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:chipSpacing="@dimen/margin_vertical_basic"
+        app:layout_constraintTop_toTopOf="parent"
+        app:singleLine="false">
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/games_filter_pc"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pc"
+            app:rippleColor="@color/colorPrimary" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/games_filter_ps4"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ps4"
+            app:rippleColor="@color/colorPrimary" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/games_filter_xone"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/xbox_one"
+            app:rippleColor="@color/colorPrimary" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/games_filter_android"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/android"
+            app:rippleColor="@color/colorPrimary" />
+
+        <com.google.android.material.chip.Chip
+            android:id="@+id/games_filter_ios"
+            style="@style/Widget.MaterialComponents.Chip.Filter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ios"
+            app:rippleColor="@color/colorPrimary" />
+    </com.google.android.material.chip.ChipGroup>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/games_filter_from_year_layout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_vertical_basic"
+        android:hint="@string/from_year_filter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/games_filter_platforms">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/games_filter_from_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="4"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin_vertical_basic"
+        android:layout_marginBottom="@dimen/margin_vertical_basic"
+        android:hint="@string/to_year_filter"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/games_filter_from_year_layout">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/games_filter_to_year"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="4"
+            android:inputType="number" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
