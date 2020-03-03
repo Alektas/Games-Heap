@@ -1,4 +1,4 @@
-package alektas.gamesheap.services
+package alektas.gamesheap.data.remote.api
 
 import alektas.gamesheap.data.entities.GameInfo
 import com.google.gson.annotations.Expose

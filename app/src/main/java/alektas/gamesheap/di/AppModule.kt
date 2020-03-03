@@ -5,7 +5,7 @@ import alektas.gamesheap.data.DataSource
 import alektas.gamesheap.data.GamesRepository
 import alektas.gamesheap.data.remote.RemoteGamesSource
 import alektas.gamesheap.domain.Repository
-import alektas.gamesheap.services.GamesService
+import alektas.gamesheap.data.remote.api.GamesApi
 import android.app.Application
 import dagger.Module
 import dagger.Provides
@@ -41,8 +41,8 @@ class AppModule {
 
     @Provides
     @Singleton
-    fun provideGamesService(retrofit: Retrofit): GamesService {
-        return retrofit.create(GamesService::class.java)
+    fun provideGamesService(retrofit: Retrofit): GamesApi {
+        return retrofit.create(GamesApi::class.java)
     }
 
 }

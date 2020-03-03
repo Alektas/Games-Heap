@@ -1,11 +1,11 @@
-package alektas.gamesheap.services
+package alektas.gamesheap.data.remote.api
 
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 
-interface GamesService {
+interface GamesApi {
 
     /**
      * Filter should be like this: field:value,field:value

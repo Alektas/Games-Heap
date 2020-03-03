@@ -5,8 +5,8 @@ import alektas.gamesheap.BuildConfig
 import alektas.gamesheap.data.DataSourceAdapter
 import alektas.gamesheap.data.entities.GameInfo
 import alektas.gamesheap.domain.Filter
-import alektas.gamesheap.services.GamesResponse
-import alektas.gamesheap.services.GamesService
+import alektas.gamesheap.data.remote.api.GamesResponse
+import alektas.gamesheap.data.remote.api.GamesApi
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.observers.DisposableSingleObserver
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 class RemoteGamesSource(private val apiKey: String) : DataSourceAdapter() {
     @Inject
-    lateinit var gamesService: GamesService
+    lateinit var gamesApi: GamesApi
     private val gamesSource: PublishSubject<List<GameInfo>> = PublishSubject.create()
     private val searchSource: PublishSubject<List<GameInfo>> = PublishSubject.create()
     private var filter: Filter = Filter()
@@ -35,7 +35,7 @@ class RemoteGamesSource(private val apiKey: String) : DataSourceAdapter() {
                     "limit = $fetchLimit, " +
                     "filter = $filter]"
         )
-        gamesService.fetchGames(
+        gamesApi.fetchGames(
             apiKey,
             offset = fetchOffset,
             limit = fetchLimit,
@@ -62,7 +62,7 @@ class RemoteGamesSource(private val apiKey: String) : DataSourceAdapter() {
 
     override fun searchGames(query: String) {
         if (BuildConfig.DEBUG) println("Searching games [query = $query]")
-        gamesService.searchGames(apiKey, query = query)
+        gamesApi.searchGames(apiKey, query = query)
             .map { response: GamesResponse ->
                 if (BuildConfig.DEBUG) println("Searched games [response = $response]")
                 response.results
@@ -79,7 +79,7 @@ class RemoteGamesSource(private val apiKey: String) : DataSourceAdapter() {
     }
 
     override fun fetchGame(id: Long): Single<GameInfo> =
-        gamesService.fetchGame(id, apiKey).map { it.results }
+        gamesApi.fetchGame(id, apiKey).map { it.results }
 
     override fun applyFilter(filter: Filter) {
         this.filter = filter
