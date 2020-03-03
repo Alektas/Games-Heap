@@ -1,6 +1,5 @@
 package alektas.gamesheap.ui.search
 
-import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,6 +11,7 @@ import alektas.gamesheap.ui.ItemListener
 import alektas.gamesheap.ui.gamelist.GamesAdapter
 import alektas.gamesheap.ui.gamelist.game.GameFragment
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import kotlinx.android.synthetic.main.content_searchlist.*
 
@@ -58,7 +58,7 @@ class SearchFragment : Fragment(), ItemListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(SearchViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
         gamesAdapter = GamesAdapter(this)
 
         val linearLayoutManager = LinearLayoutManager(requireContext())
@@ -80,11 +80,12 @@ class SearchFragment : Fragment(), ItemListener {
     }
 
     override fun onItemSelected(id: Long) {
+        if (!isAdded) return
         val f = GameFragment.newInstance(id)
-        fragmentManager?.beginTransaction()
-            ?.addToBackStack(null)
-            ?.replace(R.id.content_container, f, GameFragment.TAG)
-            ?.commit()
+        parentFragmentManager.beginTransaction()
+            .addToBackStack(null)
+            .replace(R.id.content_container, f, GameFragment.TAG)
+            .commit()
     }
 
 }

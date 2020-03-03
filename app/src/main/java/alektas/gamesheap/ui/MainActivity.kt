@@ -14,7 +14,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
             )
             .commitNow()
 
-        viewModel = ViewModelProviders.of(this).get(GamelistViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(GamelistViewModel::class.java)
 
         handleSearch(intent)
     }

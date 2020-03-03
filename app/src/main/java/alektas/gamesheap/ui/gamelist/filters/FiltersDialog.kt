@@ -15,7 +15,7 @@ import android.widget.CompoundButton
 import android.widget.Toast
 import androidx.core.view.children
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.filters_gamelist.*
@@ -41,11 +41,11 @@ class FiltersDialog : BottomSheetDialogFragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(FiltersViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(FiltersViewModel::class.java)
         loadFilterValues(viewModel)
     }
 
-    override fun onCancel(dialog: DialogInterface?) {
+    override fun onCancel(dialog: DialogInterface) {
         applyFilter(viewModel)
         super.onCancel(dialog)
     }

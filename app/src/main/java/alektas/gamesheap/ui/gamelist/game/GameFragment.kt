@@ -13,7 +13,7 @@ import alektas.gamesheap.ui.gamelist.GamelistFragment
 import android.content.Intent
 import android.view.MenuItem
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.fragment_game.*
 import kotlinx.android.synthetic.main.item_game.item_name
@@ -37,8 +37,8 @@ class GameFragment : Fragment() {
         activity?.actionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
-    override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        return when (item?.itemId) {
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
             android.R.id.home -> {
                 activity?.navigateUpTo(Intent(requireContext(), GamelistFragment::class.java))
                 true
@@ -57,7 +57,7 @@ class GameFragment : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         activity?.actionBar?.setDisplayHomeAsUpEnabled(true)
-        viewModel = ViewModelProviders.of(this).get(GameViewModel::class.java)
+        viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
         viewModel.game.observe(viewLifecycleOwner, Observer { bind(it) })
 
         gameId?.let { viewModel.fetchGame(it) }

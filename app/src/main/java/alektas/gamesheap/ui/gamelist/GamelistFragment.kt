@@ -10,7 +10,7 @@ import alektas.gamesheap.ui.gamelist.game.GameFragment
 import android.content.Context
 import android.view.*
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.synthetic.main.content_gamelist.*
@@ -30,10 +30,10 @@ class GamelistFragment : Fragment(), ItemListener {
         setHasOptionsMenu(true)
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?, inflater: MenuInflater?) {
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         super.onCreateOptionsMenu(menu, inflater)
         // Inflate the menu; this adds items to the action bar if it is present.
-        inflater?.inflate(R.menu.gamelist, menu)
+        inflater.inflate(R.menu.gamelist, menu)
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -42,7 +42,7 @@ class GamelistFragment : Fragment(), ItemListener {
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_filters -> {
-                FiltersDialog().show(fragmentManager, FiltersDialog.TAG)
+                if (isAdded) FiltersDialog().show(parentFragmentManager, FiltersDialog.TAG)
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -63,7 +63,7 @@ class GamelistFragment : Fragment(), ItemListener {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(requireActivity()).get(GamelistViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity()).get(GamelistViewModel::class.java)
         gamesAdapter = GamesAdapter(this)
         subscribeOn(viewModel)
         setupGamelist(requireContext(), viewModel, gamesAdapter)
@@ -97,10 +97,11 @@ class GamelistFragment : Fragment(), ItemListener {
     }
 
     override fun onItemSelected(id: Long) {
+        if (!isAdded) return
         val f = GameFragment.newInstance(id)
-        fragmentManager?.beginTransaction()
-            ?.addToBackStack(null)
-            ?.replace(R.id.content_container, f, GameFragment.TAG)
-            ?.commit()
+        parentFragmentManager.beginTransaction()
+            .addToBackStack(null)
+            .replace(R.id.content_container, f, GameFragment.TAG)
+            .commit()
     }
 }
