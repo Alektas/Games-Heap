@@ -1,4 +1,4 @@
-package alektas.gamesheap.ui.gamelist.game
+package alektas.gamesheap.gamedetails.ui
 
 import alektas.gamesheap.App
 import alektas.gamesheap.data.entities.GameInfo

@@ -1,11 +1,11 @@
-package alektas.gamesheap.ui
+package alektas.gamesheap.common.ui
 
 import alektas.gamesheap.*
-import alektas.gamesheap.ui.gamelist.GAMELIST_FRAGMENT_TAG
-import alektas.gamesheap.ui.gamelist.GamelistFragment
-import alektas.gamesheap.ui.gamelist.GamelistViewModel
-import alektas.gamesheap.ui.search.SEARCH_FRAGMENT_TAG
-import alektas.gamesheap.ui.search.SearchFragment
+import alektas.gamesheap.gamelist.ui.GAMELIST_FRAGMENT_TAG
+import alektas.gamesheap.gamelist.ui.GamelistFragment
+import alektas.gamesheap.gamelist.ui.GamelistViewModel
+import alektas.gamesheap.searchlist.ui.SEARCH_FRAGMENT_TAG
+import alektas.gamesheap.searchlist.ui.SearchFragment
 import android.app.SearchManager
 import android.content.Context
 import android.content.Intent

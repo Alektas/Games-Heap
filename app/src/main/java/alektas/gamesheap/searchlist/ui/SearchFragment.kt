@@ -1,4 +1,4 @@
-package alektas.gamesheap.ui.search
+package alektas.gamesheap.searchlist.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,9 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 
 import alektas.gamesheap.R
-import alektas.gamesheap.ui.ItemListener
-import alektas.gamesheap.ui.gamelist.GamesAdapter
-import alektas.gamesheap.ui.gamelist.game.GameFragment
+import alektas.gamesheap.common.ui.adapters.GamesAdapter
+import alektas.gamesheap.gamedetails.ui.GameFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -18,7 +17,7 @@ import kotlinx.android.synthetic.main.content_searchlist.*
 const val SEARCH_FRAGMENT_TAG = "SearchFragment"
 private const val ARG_QUERY = "query"
 
-class SearchFragment : Fragment(), ItemListener {
+class SearchFragment : Fragment(), GamesAdapter.ItemListener {
     private lateinit var viewModel: SearchViewModel
     private lateinit var gamesAdapter: GamesAdapter
     private var query: String? = null

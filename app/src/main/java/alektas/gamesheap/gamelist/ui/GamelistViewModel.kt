@@ -1,4 +1,4 @@
-package alektas.gamesheap.ui.gamelist
+package alektas.gamesheap.gamelist.ui
 
 import alektas.gamesheap.App
 import alektas.gamesheap.BuildConfig

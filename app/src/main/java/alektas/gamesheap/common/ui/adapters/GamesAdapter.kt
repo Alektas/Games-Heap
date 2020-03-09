@@ -1,9 +1,8 @@
-package alektas.gamesheap.ui.gamelist
+package alektas.gamesheap.common.ui.adapters
 
 import alektas.gamesheap.R
 import alektas.gamesheap.data.entities.GameInfo
 import alektas.gamesheap.data.entities.getAbbreviations
-import alektas.gamesheap.ui.ItemListener
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -21,6 +20,10 @@ class GamesAdapter(private val itemListener: ItemListener) :
             field = value
             notifyDataSetChanged()
         }
+
+    interface ItemListener {
+        fun onItemSelected(id: Long)
+    }
 
     init {
         setHasStableIds(true)

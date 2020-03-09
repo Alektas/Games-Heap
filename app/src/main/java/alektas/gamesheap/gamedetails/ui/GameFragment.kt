@@ -1,4 +1,4 @@
-package alektas.gamesheap.ui.gamelist.game
+package alektas.gamesheap.gamedetails.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -9,7 +9,7 @@ import android.view.ViewGroup
 import alektas.gamesheap.R
 import alektas.gamesheap.data.entities.GameInfo
 import alektas.gamesheap.data.entities.getFullNames
-import alektas.gamesheap.ui.gamelist.GamelistFragment
+import alektas.gamesheap.gamelist.ui.GamelistFragment
 import android.content.Intent
 import android.view.MenuItem
 import androidx.lifecycle.Observer

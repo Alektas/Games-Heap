@@ -1,10 +1,10 @@
 package alektas.gamesheap.di
 
 import alektas.gamesheap.data.remote.RemoteGamesSource
-import alektas.gamesheap.ui.gamelist.GamelistViewModel
-import alektas.gamesheap.ui.gamelist.filters.FiltersViewModel
-import alektas.gamesheap.ui.gamelist.game.GameViewModel
-import alektas.gamesheap.ui.search.SearchViewModel
+import alektas.gamesheap.gamelist.ui.GamelistViewModel
+import alektas.gamesheap.filter.ui.FiltersViewModel
+import alektas.gamesheap.gamedetails.ui.GameViewModel
+import alektas.gamesheap.searchlist.ui.SearchViewModel
 import dagger.Component
 import android.app.Application
 import dagger.BindsInstance

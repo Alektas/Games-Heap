@@ -1,4 +1,4 @@
-package alektas.gamesheap.ui.gamelist.filters
+package alektas.gamesheap.filter.ui
 
 import alektas.gamesheap.BuildConfig
 import alektas.gamesheap.R

@@ -1,12 +1,12 @@
-package alektas.gamesheap.ui.gamelist
+package alektas.gamesheap.gamelist.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import alektas.gamesheap.R
-import alektas.gamesheap.ui.ItemListener
-import alektas.gamesheap.ui.START_FETCHING_OFFSET
-import alektas.gamesheap.ui.gamelist.filters.FiltersDialog
-import alektas.gamesheap.ui.gamelist.game.GameFragment
+import alektas.gamesheap.common.ui.START_FETCHING_OFFSET
+import alektas.gamesheap.filter.ui.FiltersDialog
+import alektas.gamesheap.gamedetails.ui.GameFragment
+import alektas.gamesheap.common.ui.adapters.GamesAdapter
 import android.content.Context
 import android.view.*
 import androidx.lifecycle.Observer
@@ -17,7 +17,7 @@ import kotlinx.android.synthetic.main.content_gamelist.*
 
 const val GAMELIST_FRAGMENT_TAG = "GamelistFragment"
 
-class GamelistFragment : Fragment(), ItemListener {
+class GamelistFragment : Fragment(), GamesAdapter.ItemListener {
     private lateinit var viewModel: GamelistViewModel
     private lateinit var gamesAdapter: GamesAdapter
 

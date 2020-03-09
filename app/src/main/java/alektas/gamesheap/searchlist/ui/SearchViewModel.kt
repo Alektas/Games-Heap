@@ -1,4 +1,4 @@
-package alektas.gamesheap.ui.search
+package alektas.gamesheap.searchlist.ui
 
 import alektas.gamesheap.App
 import alektas.gamesheap.BuildConfig
