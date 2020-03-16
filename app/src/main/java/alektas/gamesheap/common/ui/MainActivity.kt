@@ -3,7 +3,6 @@ package alektas.gamesheap.common.ui
 import alektas.gamesheap.*
 import alektas.gamesheap.gamelist.ui.GAMELIST_FRAGMENT_TAG
 import alektas.gamesheap.gamelist.ui.GamelistFragment
-import alektas.gamesheap.gamelist.ui.GamelistViewModel
 import alektas.gamesheap.searchlist.ui.SEARCH_FRAGMENT_TAG
 import alektas.gamesheap.searchlist.ui.SearchFragment
 import android.app.SearchManager
@@ -14,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.widget.Toast
 import androidx.appcompat.widget.SearchView
-import androidx.lifecycle.ViewModelProvider
 import kotlinx.android.synthetic.main.activity_main.*
 
 /**
@@ -24,20 +22,19 @@ import kotlinx.android.synthetic.main.activity_main.*
 const val START_FETCHING_OFFSET = 7
 
 class MainActivity : AppCompatActivity() {
-    private lateinit var viewModel: GamelistViewModel
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         setSupportActionBar(bar)
 
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.content_container, GamelistFragment.newInstance(),
-                GAMELIST_FRAGMENT_TAG
-            )
-            .commitNow()
-
-        viewModel = ViewModelProvider(this).get(GamelistViewModel::class.java)
+        if (supportFragmentManager.findFragmentByTag(GAMELIST_FRAGMENT_TAG) == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.content_container, GamelistFragment.newInstance(),
+                    GAMELIST_FRAGMENT_TAG
+                )
+                .commitNow()
+        }
 
         handleSearch(intent)
     }
