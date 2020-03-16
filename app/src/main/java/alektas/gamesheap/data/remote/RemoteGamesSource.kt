@@ -9,7 +9,8 @@ import alektas.gamesheap.data.remote.api.GamesResponse
 import alektas.gamesheap.data.remote.api.GamesApi
 import io.reactivex.Observable
 import io.reactivex.Single
-import io.reactivex.observers.DisposableSingleObserver
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
@@ -17,8 +18,9 @@ import javax.inject.Inject
 class RemoteGamesSource(private val apiKey: String) : DataSourceAdapter() {
     @Inject
     lateinit var gamesApi: GamesApi
-    private val gamesSource: PublishSubject<List<GameInfo>> = PublishSubject.create()
-    private val searchSource: PublishSubject<List<GameInfo>> = PublishSubject.create()
+    private val disposable = CompositeDisposable()
+    private val gamesSource: PublishSubject<Response> = PublishSubject.create()
+    private val searchSource: PublishSubject<Response> = PublishSubject.create()
     private var filter: Filter = Filter()
     private val fetchLimit = 15
     private var fetchOffset = 0
@@ -35,46 +37,44 @@ class RemoteGamesSource(private val apiKey: String) : DataSourceAdapter() {
                     "limit = $fetchLimit, " +
                     "filter = $filter]"
         )
-        gamesApi.fetchGames(
-            apiKey,
-            offset = fetchOffset,
-            limit = fetchLimit,
-            filter = filter.toString()
-        )
+
+        disposable += gamesApi.fetchGames(
+                apiKey,
+                offset = fetchOffset,
+                limit = fetchLimit,
+                filter = filter.toString()
+            )
             .map { response: GamesResponse ->
                 if (BuildConfig.DEBUG) println("Fetched games [response = $response]")
-                response.results
+                if (isError(response.error)) Response.Error(response.error!!)
+                else Response.DataList(response.results ?: listOf())
             }
             .subscribeOn(Schedulers.io())
-            .subscribe(object : DisposableSingleObserver<List<GameInfo>>() {
-                override fun onSuccess(t: List<GameInfo>) {
-                    if (BuildConfig.DEBUG) println("Fetching games is successful. Prepare items.")
-                    gamesSource.onNext(t)
-                    fetchOffset += fetchLimit
-                }
-
-                override fun onError(e: Throwable) {
-                    if (BuildConfig.DEBUG) println("Fetching games is failed. Throw error.")
-                    gamesSource.onError(e)
-                }
+            .onErrorReturnItem(Response.Error("Failed to fetch games page. Probably problems with Internet connection."))
+            .subscribe({
+                if (BuildConfig.DEBUG) println("Complete fetching games page.")
+                gamesSource.onNext(it)
+                fetchOffset += fetchLimit
+            }, {
+                if (BuildConfig.DEBUG) println("Failed to fetch games page.")
             })
     }
 
     override fun searchGames(query: String) {
         if (BuildConfig.DEBUG) println("Searching games [query = $query]")
-        gamesApi.searchGames(apiKey, query = query)
+
+        disposable += gamesApi.searchGames(apiKey, query = query)
             .map { response: GamesResponse ->
                 if (BuildConfig.DEBUG) println("Searched games [response = $response]")
-                response.results
+                if (isError(response.error)) Response.Error(response.error!!)
+                else Response.DataList(response.results ?: listOf())
             }
-            .subscribe(object : DisposableSingleObserver<List<GameInfo>>() {
-                override fun onSuccess(t: List<GameInfo>) {
-                    searchSource.onNext(t)
-                }
-
-                override fun onError(e: Throwable) {
-                    searchSource.onError(e)
-                }
+            .onErrorReturnItem(Response.Error("Failed to search games. Probably problems with Internet connection."))
+            .subscribe({
+                if (BuildConfig.DEBUG) println("Complete searching games.")
+                searchSource.onNext(it)
+            }, {
+                if (BuildConfig.DEBUG) println("Failed to search games.")
             })
     }
 
@@ -86,13 +86,15 @@ class RemoteGamesSource(private val apiKey: String) : DataSourceAdapter() {
         fetchGames(true)
     }
 
-    override fun getGames(): Observable<List<GameInfo>> {
-        return gamesSource.doOnSubscribe {
-            if (BuildConfig.DEBUG) println("Subscribe to remote source.")
-        }
+    override fun getGames(): Observable<Response> {
+        return gamesSource
     }
 
-    override fun getSearchGames(): Observable<List<GameInfo>> {
+    override fun getSearchGames(): Observable<Response> {
         return searchSource
+    }
+
+    private fun isError(message: String?): Boolean {
+        return message != null && message != "OK"
     }
 }

@@ -25,5 +25,7 @@ Proin cursus tellus euismod metus mollis, et viverra risus pharetra. Nullam cons
     <string name="platforms_empty">Unknown</string>
     <string name="desciption_empty">Nothing known about the game</string>
     <string name="gamelist_img_description">Main image of the game</string>
+    <string name="error_failed_to_load_gamelist">Failed to load games. Check your Internet connection.</string>
+    <string name="gamelist_placeholder_text">No games</string>
 
 </resources>

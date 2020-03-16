@@ -10,11 +10,16 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.jakewharton.rxbinding3.view.clicks
+import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.item_game.view.*
+import kotlin.collections.ArrayList
 
-class GamesAdapter(private val itemListener: ItemListener) :
-    RecyclerView.Adapter<GamesAdapter.GameViewHolder>() {
+class GamesAdapter : RecyclerView.Adapter<GamesAdapter.GameViewHolder>() {
 
+    private val clickProducer = PublishSubject.create<Long>()
+    val gameClicks: Observable<Long> = clickProducer
     var games: List<GameInfo> = ArrayList()
         set(value) {
             field = value
@@ -36,13 +41,20 @@ class GamesAdapter(private val itemListener: ItemListener) :
 
     override fun onBindViewHolder(holder: GameViewHolder, position: Int) {
         holder.bindItem(games[position])
-        holder.itemView.setOnClickListener { games[position].id?.let { itemListener.onItemSelected(it) } }
+        holder.itemView.clicks()
+            .map { games[position].id }
+            .subscribe(clickProducer)
     }
 
     override fun getItemCount(): Int = games.size
 
     override fun getItemId(position: Int): Long {
         return games[position].id ?: 0
+    }
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        clickProducer.onComplete()
+        super.onDetachedFromRecyclerView(recyclerView)
     }
 
     class GameViewHolder(view: View) : RecyclerView.ViewHolder(view) {

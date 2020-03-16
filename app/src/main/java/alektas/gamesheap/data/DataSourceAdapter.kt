@@ -1,12 +1,13 @@
 package alektas.gamesheap.data
 
 import alektas.gamesheap.data.entities.GameInfo
+import alektas.gamesheap.data.remote.Response
 import alektas.gamesheap.domain.Filter
 import io.reactivex.Observable
 import io.reactivex.Single
 
 open class DataSourceAdapter: DataSource {
-    override fun getSearchGames(): Observable<List<GameInfo>> {
+    override fun getSearchGames(): Observable<Response> {
         return Observable.create {  }
     }
 
@@ -24,7 +25,7 @@ open class DataSourceAdapter: DataSource {
 
     }
 
-    override fun getGames(): Observable<List<GameInfo>> {
+    override fun getGames(): Observable<Response> {
         return Observable.create {  }
     }
 }

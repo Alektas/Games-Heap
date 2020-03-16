@@ -58,7 +58,7 @@ class SearchFragment : Fragment(), GamesAdapter.ItemListener {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
-        gamesAdapter = GamesAdapter(this)
+        gamesAdapter = GamesAdapter()
 
         val linearLayoutManager = LinearLayoutManager(requireContext())
         game_list.layoutManager = linearLayoutManager

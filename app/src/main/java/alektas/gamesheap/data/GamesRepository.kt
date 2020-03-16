@@ -2,6 +2,7 @@ package alektas.gamesheap.data
 
 import alektas.gamesheap.BuildConfig
 import alektas.gamesheap.data.entities.GameInfo
+import alektas.gamesheap.data.remote.Response
 import alektas.gamesheap.domain.Filter
 import alektas.gamesheap.domain.Repository
 import io.reactivex.Observable
@@ -21,11 +22,11 @@ class GamesRepository(var remoteSource: DataSource): Repository {
         remoteSource.searchGames(query)
     }
 
-    override fun getGames(): Observable<List<GameInfo>> {
+    override fun getGames(): Observable<Response> {
         return remoteSource.getGames()
     }
 
-    override fun getSearchGames(): Observable<List<GameInfo>> {
+    override fun getSearchGames(): Observable<Response> {
         return remoteSource.getSearchGames()
     }
 

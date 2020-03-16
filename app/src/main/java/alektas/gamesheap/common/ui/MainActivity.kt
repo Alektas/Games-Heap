@@ -15,12 +15,6 @@ import android.widget.Toast
 import androidx.appcompat.widget.SearchView
 import kotlinx.android.synthetic.main.activity_main.*
 
-/**
- * Position of list item from the end from which will started a new portion of items from server
- * on user scrolling.
- */
-const val START_FETCHING_OFFSET = 7
-
 class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {

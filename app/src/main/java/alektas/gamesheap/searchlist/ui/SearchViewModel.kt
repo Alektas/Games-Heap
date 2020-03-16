@@ -3,6 +3,7 @@ package alektas.gamesheap.searchlist.ui
 import alektas.gamesheap.App
 import alektas.gamesheap.BuildConfig
 import alektas.gamesheap.data.entities.GameInfo
+import alektas.gamesheap.data.remote.Response
 import alektas.gamesheap.domain.Repository
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -23,15 +24,15 @@ class SearchViewModel : ViewModel() {
         disposable = repository.getSearchGames()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
-            .subscribeWith(object : DisposableObserver<List<GameInfo>>() {
+            .subscribeWith(object : DisposableObserver<Response>() {
                 override fun onComplete() {
                     if (BuildConfig.DEBUG) println("SearchViewModel. Complete loading")
                     isLoading.value = false
                 }
 
-                override fun onNext(t: List<GameInfo>) {
+                override fun onNext(t: Response) {
                     if (BuildConfig.DEBUG) println("SearchViewModel. On next")
-                    games.value = t
+                    if (t is Response.DataList) games.value = t.games
                     isLoading.value = false
                 }
 

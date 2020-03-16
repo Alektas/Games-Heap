@@ -33,8 +33,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = "1.8"
-        targetCompatibility = 1.8
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = JavaVersion.VERSION_1_8.toString()
     }
     buildToolsVersion = '29.0.2'
 }
@@ -52,6 +55,9 @@ dependencies {
     implementation 'android.arch.lifecycle:extensions:1.1.1'
     implementation 'com.google.android.material:material:1.1.0'
 
+    implementation "androidx.core:core-ktx:1.2.0"
+    implementation "androidx.fragment:fragment-ktx:1.2.2"
+
     def room_version = "2.2.4"
     implementation "androidx.room:room-runtime:$room_version"
     implementation "androidx.room:room-rxjava2:$room_version"
@@ -60,6 +66,11 @@ dependencies {
 
     implementation 'io.reactivex.rxjava2:rxjava:2.2.12'
     implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation 'io.reactivex.rxjava2:rxkotlin:2.4.0'
+
+    def rxbinding_version = "3.1.0"
+    implementation "com.jakewharton.rxbinding3:rxbinding:$rxbinding_version"
+    implementation "com.jakewharton.rxbinding3:rxbinding-recyclerview:$rxbinding_version"
 
     def retrofit_version = "2.7.1"
     implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
