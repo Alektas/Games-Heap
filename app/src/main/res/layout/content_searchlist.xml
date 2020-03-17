@@ -15,6 +15,27 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/item_game" />
 
+    <TextView
+        android:id="@+id/games_placeholder"
+        style="@style/TextAppearance.MaterialComponents.Headline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="@string/searchlist_placeholder_text"
+        android:visibility="invisible" />
+
+    <TextView
+        android:id="@+id/games_error_text"
+        style="@style/TextAppearance.MaterialComponents.Headline5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="16dp"
+        android:visibility="invisible" />
+
     <ProgressBar
         android:id="@+id/games_loading_bar"
         android:layout_width="wrap_content"

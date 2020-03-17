@@ -7,24 +7,30 @@ import android.view.View
 import android.view.ViewGroup
 
 import alektas.gamesheap.R
+import alektas.gamesheap.common.ErrorCode
+import alektas.gamesheap.common.ui.ViewContract
 import alektas.gamesheap.common.ui.adapters.GamesAdapter
 import alektas.gamesheap.gamedetails.ui.GameFragment
+import alektas.gamesheap.gamelist.domain.GamelistAction
+import alektas.gamesheap.searchlist.domain.SearchlistEvent
+import android.content.Context
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import io.reactivex.Observable
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.plusAssign
+import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.content_searchlist.*
 
 const val SEARCH_FRAGMENT_TAG = "SearchFragment"
 private const val ARG_QUERY = "query"
 
-class SearchFragment : Fragment(), GamesAdapter.ItemListener {
-    private lateinit var viewModel: SearchViewModel
+class SearchFragment : Fragment(), ViewContract<SearchlistEvent> {
+    private val viewModel: SearchViewModel by viewModels()
     private lateinit var gamesAdapter: GamesAdapter
-    private var query: String? = null
-    set(value) {
-        arguments?.putString(ARG_QUERY, value)
-        field = value
-    }
+    private val searchQueries = PublishSubject.create<String>()
+    private val disposables = CompositeDisposable()
 
     companion object {
         @JvmStatic
@@ -36,18 +42,6 @@ class SearchFragment : Fragment(), GamesAdapter.ItemListener {
             }
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            query = it.getString(ARG_QUERY)
-        }
-    }
-
-    override fun onResume() {
-        query?.let { viewModel.searchGames(it) }
-        super.onResume()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -55,30 +49,66 @@ class SearchFragment : Fragment(), GamesAdapter.ItemListener {
         return inflater.inflate(R.layout.content_searchlist, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(SearchViewModel::class.java)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         gamesAdapter = GamesAdapter()
+        setupGamelist(requireContext(), gamesAdapter)
+        disposables += events().subscribe { viewModel.process(it) }
+        subscribeOn(viewModel)
+        arguments?.getString(ARG_QUERY)?.let {
+            searchQueries.onNext(it)
+        }
+    }
 
-        val linearLayoutManager = LinearLayoutManager(requireContext())
-        game_list.layoutManager = linearLayoutManager
-        game_list.adapter = gamesAdapter
+    override fun onDestroyView() {
+        disposables.clear()
+        super.onDestroyView()
+    }
 
-        viewModel.isLoading.observe(viewLifecycleOwner, Observer {
-            games_loading_bar.visibility = if (it) View.VISIBLE else View.INVISIBLE
-        })
-
-        viewModel.games.observe(viewLifecycleOwner, Observer {
-            gamesAdapter.games = it
-        })
+    override fun events(): Observable<SearchlistEvent> {
+        return Observable.merge(
+            gamesAdapter.gameClicks.map { SearchlistEvent.SelectGame(it) },
+            searchQueries.map { SearchlistEvent.Search(it) }
+        )
     }
 
     fun search(query: String) {
-        this.query = query
-        viewModel.searchGames(query)
+        arguments = Bundle().apply {
+            putString(ARG_QUERY, query)
+        }
+        searchQueries.onNext(query)
     }
 
-    override fun onItemSelected(id: Long) {
+    private fun setupGamelist(context: Context, adapter: GamesAdapter) {
+        val linearLayoutManager = LinearLayoutManager(context)
+        game_list.layoutManager = linearLayoutManager
+        game_list.adapter = adapter
+    }
+
+    private fun subscribeOn(viewModel: SearchViewModel) {
+        viewModel.state.observe(viewLifecycleOwner, Observer {
+            gamesAdapter.games = it.games
+            games_placeholder.visibility = if (it.showPlaceholder) View.VISIBLE else View.INVISIBLE
+            games_loading_bar.visibility = if (it.isLoading) View.VISIBLE else View.INVISIBLE
+            games_error_text.visibility = if (it.errorCode != null) View.VISIBLE else View.INVISIBLE
+            it.errorCode?.let { code -> showError(code) }
+        })
+
+        viewModel.actions.observe(viewLifecycleOwner, Observer {
+            when (it) {
+                is GamelistAction.Navigate -> it.gameIdContainer.value?.let { id -> showGameDetails(id) }
+            }
+        })
+    }
+
+    private fun showError(code: ErrorCode) {
+        val msg = when(code) {
+            ErrorCode.ERROR_LOADING -> getString(R.string.error_failed_to_load_gamelist)
+        }
+        games_error_text.text = msg
+    }
+
+    private fun showGameDetails(id: Long) {
         if (!isAdded) return
         val f = GameFragment.newInstance(id)
         parentFragmentManager.beginTransaction()

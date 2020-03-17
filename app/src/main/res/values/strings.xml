@@ -28,5 +28,6 @@ Proin cursus tellus euismod metus mollis, et viverra risus pharetra. Nullam cons
     <string name="error_failed_to_load_gamelist">Failed to load games. Check your Internet connection.</string>
     <string name="gamelist_placeholder_text">No games</string>
     <string name="error_failed_to_load_game">Failed to load game. Check your Internet connection.</string>
+    <string name="searchlist_placeholder_text">No games found</string>
 
 </resources>
