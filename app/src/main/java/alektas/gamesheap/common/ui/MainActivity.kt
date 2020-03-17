@@ -1,6 +1,8 @@
 package alektas.gamesheap.common.ui
 
 import alektas.gamesheap.*
+import alektas.gamesheap.common.domain.MainAction
+import alektas.gamesheap.common.domain.MainEvent
 import alektas.gamesheap.gamelist.ui.GAMELIST_FRAGMENT_TAG
 import alektas.gamesheap.gamelist.ui.GamelistFragment
 import alektas.gamesheap.searchlist.ui.SEARCH_FRAGMENT_TAG
@@ -11,11 +13,13 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
-import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.widget.SearchView
+import androidx.lifecycle.Observer
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+    private val viewModel: ActivityViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -30,7 +34,11 @@ class MainActivity : AppCompatActivity() {
                 .commitNow()
         }
 
-        handleSearch(intent)
+        viewModel.actions.observe(this, Observer {
+            when (it) {
+                is MainAction.Navigate -> it.destinationContainer.value?.let { navigateToShowlist() }
+            }
+        })
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -56,22 +64,17 @@ class MainActivity : AppCompatActivity() {
         if (intent == null) return
         if (Intent.ACTION_SEARCH == intent.action) {
             intent.getStringExtra(SearchManager.QUERY)?.also { query ->
-                if (query.isNotEmpty()) startSearching(query)
-                Toast.makeText(this, "Search: $query", Toast.LENGTH_SHORT).show()
+                viewModel.process(MainEvent.Search(query))
             }
         }
     }
 
-    private fun startSearching(query: String) {
+    private fun navigateToShowlist() {
         var searchFragment = supportFragmentManager.findFragmentByTag(SEARCH_FRAGMENT_TAG)
-        if (searchFragment?.isVisible == true) {
-            (searchFragment as SearchFragment).search(query)
-        } else {
-            searchFragment = SearchFragment.newInstance(query)
+        if (searchFragment == null) {
+            searchFragment = SearchFragment.newInstance()
             supportFragmentManager.beginTransaction()
-                .replace(R.id.content_container, searchFragment,
-                    SEARCH_FRAGMENT_TAG
-                )
+                .replace(R.id.content_container, searchFragment, SEARCH_FRAGMENT_TAG)
                 .addToBackStack(null)
                 .commit()
         }

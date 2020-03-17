@@ -1,4 +1,4 @@
-package alektas.gamesheap.domain
+package alektas.gamesheap.common.domain
 
 import org.junit.Test
 

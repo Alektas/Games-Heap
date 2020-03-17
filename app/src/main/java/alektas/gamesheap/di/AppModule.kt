@@ -4,7 +4,7 @@ import alektas.gamesheap.R
 import alektas.gamesheap.data.DataSource
 import alektas.gamesheap.data.GamesRepository
 import alektas.gamesheap.data.remote.RemoteGamesSource
-import alektas.gamesheap.domain.Repository
+import alektas.gamesheap.common.domain.Repository
 import alektas.gamesheap.data.remote.api.GamesApi
 import android.app.Application
 import dagger.Module

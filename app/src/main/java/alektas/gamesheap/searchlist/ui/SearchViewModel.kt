@@ -7,7 +7,7 @@ import alektas.gamesheap.common.ErrorCode
 import alektas.gamesheap.common.Processor
 import alektas.gamesheap.data.entities.GameInfo
 import alektas.gamesheap.data.remote.Response
-import alektas.gamesheap.domain.Repository
+import alektas.gamesheap.common.domain.Repository
 import alektas.gamesheap.gamelist.domain.GamelistAction
 import alektas.gamesheap.gamelist.domain.GamelistState
 import alektas.gamesheap.gamelist.domain.PartialGamelistState
@@ -35,6 +35,8 @@ class SearchViewModel : ViewModel(), Processor<SearchlistEvent> {
     init {
         App.appComponent.injects(this)
 
+        applyState(PartialGamelistState.Loading)
+
         disposable += repository.getSearchGames()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
@@ -53,7 +55,6 @@ class SearchViewModel : ViewModel(), Processor<SearchlistEvent> {
 
     override fun process(event: SearchlistEvent) {
         when (event) {
-            is SearchlistEvent.Search -> searchGames(event.query)
             is SearchlistEvent.SelectGame -> {
                 applyAction(GamelistAction.Navigate(DisposableContainer(event.gameId)))
             }
@@ -96,11 +97,6 @@ class SearchViewModel : ViewModel(), Processor<SearchlistEvent> {
         } else {
             PartialGamelistState.Data(games)
         }
-    }
-
-    private fun searchGames(query: String) {
-        applyState(PartialGamelistState.Loading)
-        repository.searchGames(query)
     }
 
     override fun onCleared() {

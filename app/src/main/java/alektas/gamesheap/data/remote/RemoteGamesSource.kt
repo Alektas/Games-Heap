@@ -4,7 +4,7 @@ import alektas.gamesheap.App
 import alektas.gamesheap.BuildConfig
 import alektas.gamesheap.data.DataSourceAdapter
 import alektas.gamesheap.data.entities.GameInfo
-import alektas.gamesheap.domain.Filter
+import alektas.gamesheap.common.domain.Filter
 import alektas.gamesheap.data.remote.api.GamesResponse
 import alektas.gamesheap.data.remote.api.GamesApi
 import io.reactivex.Observable

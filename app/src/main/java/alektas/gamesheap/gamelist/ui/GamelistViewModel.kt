@@ -7,7 +7,7 @@ import alektas.gamesheap.common.ErrorCode
 import alektas.gamesheap.common.Processor
 import alektas.gamesheap.data.entities.GameInfo
 import alektas.gamesheap.data.remote.Response
-import alektas.gamesheap.domain.Repository
+import alektas.gamesheap.common.domain.Repository
 import alektas.gamesheap.gamelist.domain.GamelistAction
 import alektas.gamesheap.gamelist.domain.GamelistEvent
 import alektas.gamesheap.gamelist.domain.GamelistState

@@ -2,7 +2,7 @@ package alektas.gamesheap.data
 
 import alektas.gamesheap.data.entities.GameInfo
 import alektas.gamesheap.data.remote.Response
-import alektas.gamesheap.domain.Filter
+import alektas.gamesheap.common.domain.Filter
 import io.reactivex.Observable
 import io.reactivex.Single
 

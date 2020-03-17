@@ -4,7 +4,7 @@ import alektas.gamesheap.App
 import alektas.gamesheap.BuildConfig
 import alektas.gamesheap.common.ErrorCode
 import alektas.gamesheap.common.Processor
-import alektas.gamesheap.domain.Repository
+import alektas.gamesheap.common.domain.Repository
 import alektas.gamesheap.gamedetails.domain.GameDetailsEvent
 import alektas.gamesheap.gamedetails.domain.GameDetailsState
 import android.util.Log

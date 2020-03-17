@@ -1,4 +1,4 @@
-package alektas.gamesheap.domain
+package alektas.gamesheap.common.domain
 
 import alektas.gamesheap.data.entities.GameInfo
 import alektas.gamesheap.data.remote.Response

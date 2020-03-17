@@ -20,26 +20,18 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
-import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.content_searchlist.*
 
 const val SEARCH_FRAGMENT_TAG = "SearchFragment"
-private const val ARG_QUERY = "query"
 
 class SearchFragment : Fragment(), ViewContract<SearchlistEvent> {
     private val viewModel: SearchViewModel by viewModels()
     private lateinit var gamesAdapter: GamesAdapter
-    private val searchQueries = PublishSubject.create<String>()
     private val disposables = CompositeDisposable()
 
     companion object {
         @JvmStatic
-        fun newInstance(query: String) =
-            SearchFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_QUERY, query)
-                }
-            }
+        fun newInstance() = SearchFragment()
     }
 
     override fun onCreateView(
@@ -55,9 +47,6 @@ class SearchFragment : Fragment(), ViewContract<SearchlistEvent> {
         setupGamelist(requireContext(), gamesAdapter)
         disposables += events().subscribe { viewModel.process(it) }
         subscribeOn(viewModel)
-        arguments?.getString(ARG_QUERY)?.let {
-            searchQueries.onNext(it)
-        }
     }
 
     override fun onDestroyView() {
@@ -66,17 +55,7 @@ class SearchFragment : Fragment(), ViewContract<SearchlistEvent> {
     }
 
     override fun events(): Observable<SearchlistEvent> {
-        return Observable.merge(
-            gamesAdapter.gameClicks.map { SearchlistEvent.SelectGame(it) },
-            searchQueries.map { SearchlistEvent.Search(it) }
-        )
-    }
-
-    fun search(query: String) {
-        arguments = Bundle().apply {
-            putString(ARG_QUERY, query)
-        }
-        searchQueries.onNext(query)
+        return gamesAdapter.gameClicks.map { SearchlistEvent.SelectGame(it) }
     }
 
     private fun setupGamelist(context: Context, adapter: GamesAdapter) {

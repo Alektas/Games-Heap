@@ -1,8 +1,8 @@
 package alektas.gamesheap.filter.ui
 
 import alektas.gamesheap.App
-import alektas.gamesheap.domain.Filter
-import alektas.gamesheap.domain.Repository
+import alektas.gamesheap.common.domain.Filter
+import alektas.gamesheap.common.domain.Repository
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import io.reactivex.android.schedulers.AndroidSchedulers
