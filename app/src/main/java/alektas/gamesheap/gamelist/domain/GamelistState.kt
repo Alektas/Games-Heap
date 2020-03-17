@@ -11,15 +11,8 @@ data class GamelistState(
 )
 
 sealed class PartialGamelistState {
-
     object Loading : PartialGamelistState()
-
     data class Data(val games: List<GameInfo>) : PartialGamelistState()
-
-    data class DataPage(val page: List<GameInfo>) : PartialGamelistState()
-
     object Empty : PartialGamelistState()
-
     data class Error(val code: ErrorCode) : PartialGamelistState()
-
 }

@@ -109,12 +109,6 @@ class GamelistViewModel : ViewModel(), Processor<GamelistEvent> {
             is PartialGamelistState.Data -> GamelistState(
                 games = newState.games
             )
-            is PartialGamelistState.DataPage -> oldState.copy(
-                games = oldState.games + newState.page,
-                isLoading = false,
-                showPlaceholder = false,
-                errorCode = null
-            )
             is PartialGamelistState.Empty -> GamelistState(
                 showPlaceholder = true
             )

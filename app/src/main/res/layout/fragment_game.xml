@@ -7,10 +7,17 @@
     android:layout_height="match_parent">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/game_root"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingBottom="@dimen/padding_bottom_page"
         tools:context="alektas.stroymat.ui.pricelist.ItemFragment">
+
+        <androidx.constraintlayout.widget.Group
+            android:id="@+id/game_content"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:constraint_referenced_ids="item_img, item_name, item_release_label, game_release, item_platforms_label, item_platforms, item_description" />
 
         <ImageView
             android:id="@+id/item_img"
@@ -91,10 +98,50 @@
             android:layout_marginEnd="@dimen/margin_horiz_item_details_text"
             android:layout_marginTop="@dimen/margin_top_item_details_description"
             android:text="@string/desciption_empty"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/item_platforms"
-            tools:text="@string/lorem"/>
+            tools:text="@string/lorem" />
+
+        <ProgressBar
+            android:id="@+id/game_loading_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/item_img"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/item_img" />
+
+        <TextView
+            android:id="@+id/game_placeholder_text"
+            style="@style/TextAppearance.MaterialComponents.Headline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="16dp"
+            android:gravity="center"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/item_img"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/item_img" />
+
+        <TextView
+            android:id="@+id/error_text"
+            style="@style/TextAppearance.MaterialComponents.Headline5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:padding="16dp"
+            android:gravity="center"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toBottomOf="@id/item_img"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/item_img" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
