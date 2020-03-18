@@ -2,8 +2,8 @@ package alektas.gamesheap.gamedetails.ui
 
 import alektas.gamesheap.App
 import alektas.gamesheap.BuildConfig
-import alektas.gamesheap.common.ErrorCode
-import alektas.gamesheap.common.Processor
+import alektas.gamesheap.common.domain.entities.ErrorCode
+import alektas.gamesheap.common.ui.Processor
 import alektas.gamesheap.common.domain.Repository
 import alektas.gamesheap.gamedetails.domain.GameDetailsEvent
 import alektas.gamesheap.gamedetails.domain.GameDetailsState
@@ -17,7 +17,8 @@ import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class GameViewModel : ViewModel(), Processor<GameDetailsEvent> {
+class GameViewModel : ViewModel(),
+    Processor<GameDetailsEvent> {
     @Inject
     lateinit var repository: Repository
     private val _state = MutableLiveData<GameDetailsState>(

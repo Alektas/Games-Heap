@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 
 import alektas.gamesheap.R
-import alektas.gamesheap.common.ErrorCode
+import alektas.gamesheap.common.domain.entities.ErrorCode
 import alektas.gamesheap.common.ui.ViewContract
 import alektas.gamesheap.common.ui.adapters.GamesAdapter
 import alektas.gamesheap.gamedetails.ui.GameFragment
@@ -24,7 +24,8 @@ import kotlinx.android.synthetic.main.content_searchlist.*
 
 const val SEARCH_FRAGMENT_TAG = "SearchFragment"
 
-class SearchFragment : Fragment(), ViewContract<SearchlistEvent> {
+class SearchFragment : Fragment(),
+    ViewContract<SearchlistEvent> {
     private val viewModel: SearchViewModel by viewModels()
     private lateinit var gamesAdapter: GamesAdapter
     private val disposables = CompositeDisposable()

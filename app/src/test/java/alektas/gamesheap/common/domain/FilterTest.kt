@@ -1,5 +1,8 @@
 package alektas.gamesheap.common.domain
 
+import alektas.gamesheap.common.domain.entities.Filter
+import alektas.gamesheap.common.domain.entities.PLATFORM_ANDROID
+import alektas.gamesheap.common.domain.entities.PLATFORM_IOS
 import org.junit.Test
 
 import org.junit.Assert.*
@@ -16,7 +19,10 @@ class FilterTest {
     @Test
     fun toString_addDifferentPlatforms() {
         val filter = Filter()
-        filter.addPlatforms(PLATFORM_ANDROID, PLATFORM_IOS)
+        filter.addPlatforms(
+            PLATFORM_ANDROID,
+            PLATFORM_IOS
+        )
         val expected =
             "original_release_date:2019-1-1 00:00:00|2022-1-1 00:00:00,platforms:$PLATFORM_ANDROID|$PLATFORM_IOS"
         assertEquals(expected, filter.toString())
@@ -25,7 +31,10 @@ class FilterTest {
     @Test
     fun toString_addDuplicatePlatforms() {
         val filter = Filter()
-        filter.addPlatforms(PLATFORM_ANDROID, PLATFORM_ANDROID)
+        filter.addPlatforms(
+            PLATFORM_ANDROID,
+            PLATFORM_ANDROID
+        )
         val expected =
             "original_release_date:2019-1-1 00:00:00|2022-1-1 00:00:00,platforms:$PLATFORM_ANDROID|$PLATFORM_ANDROID"
         assertNotEquals(expected, filter.toString())

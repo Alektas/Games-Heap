@@ -1,7 +1,7 @@
 package alektas.gamesheap.gamelist.domain
 
-import alektas.gamesheap.common.ErrorCode
-import alektas.gamesheap.data.entities.GameInfo
+import alektas.gamesheap.common.domain.entities.ErrorCode
+import alektas.gamesheap.common.data.entities.GameInfo
 
 data class GamelistState(
     val games: List<GameInfo> = listOf(),

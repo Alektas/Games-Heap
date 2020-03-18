@@ -1,12 +1,12 @@
-package alektas.gamesheap.data.remote
+package alektas.gamesheap.common.data.remote
 
 import alektas.gamesheap.App
 import alektas.gamesheap.BuildConfig
-import alektas.gamesheap.data.DataSourceAdapter
-import alektas.gamesheap.data.entities.GameInfo
-import alektas.gamesheap.common.domain.Filter
-import alektas.gamesheap.data.remote.api.GamesResponse
-import alektas.gamesheap.data.remote.api.GamesApi
+import alektas.gamesheap.common.data.DataSourceAdapter
+import alektas.gamesheap.common.data.entities.GameInfo
+import alektas.gamesheap.common.domain.entities.Filter
+import alektas.gamesheap.common.data.remote.api.GamesResponse
+import alektas.gamesheap.common.data.remote.api.GamesApi
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
@@ -21,7 +21,8 @@ class RemoteGamesSource(private val apiKey: String) : DataSourceAdapter() {
     private val disposable = CompositeDisposable()
     private val gamesSource: PublishSubject<Response> = PublishSubject.create()
     private val searchSource: PublishSubject<Response> = PublishSubject.create()
-    private var filter: Filter = Filter()
+    private var filter: Filter =
+        Filter()
     private val fetchLimit = 15
     private var fetchOffset = 0
 

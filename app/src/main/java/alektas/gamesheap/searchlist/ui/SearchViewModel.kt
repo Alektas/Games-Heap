@@ -2,11 +2,11 @@ package alektas.gamesheap.searchlist.ui
 
 import alektas.gamesheap.App
 import alektas.gamesheap.BuildConfig
-import alektas.gamesheap.common.DisposableContainer
-import alektas.gamesheap.common.ErrorCode
-import alektas.gamesheap.common.Processor
-import alektas.gamesheap.data.entities.GameInfo
-import alektas.gamesheap.data.remote.Response
+import alektas.gamesheap.common.domain.entities.DisposableContainer
+import alektas.gamesheap.common.domain.entities.ErrorCode
+import alektas.gamesheap.common.ui.Processor
+import alektas.gamesheap.common.data.entities.GameInfo
+import alektas.gamesheap.common.data.remote.Response
 import alektas.gamesheap.common.domain.Repository
 import alektas.gamesheap.gamelist.domain.GamelistAction
 import alektas.gamesheap.gamelist.domain.GamelistState
@@ -22,7 +22,8 @@ import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class SearchViewModel : ViewModel(), Processor<SearchlistEvent> {
+class SearchViewModel : ViewModel(),
+    Processor<SearchlistEvent> {
     @Inject lateinit var repository: Repository
     private val _state = MutableLiveData(GamelistState())
     val state: LiveData<GamelistState>
@@ -56,7 +57,11 @@ class SearchViewModel : ViewModel(), Processor<SearchlistEvent> {
     override fun process(event: SearchlistEvent) {
         when (event) {
             is SearchlistEvent.SelectGame -> {
-                applyAction(GamelistAction.Navigate(DisposableContainer(event.gameId)))
+                applyAction(GamelistAction.Navigate(
+                    DisposableContainer(
+                        event.gameId
+                    )
+                ))
             }
         }
     }

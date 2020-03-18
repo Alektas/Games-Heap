@@ -1,7 +1,7 @@
 package alektas.gamesheap.gamedetails.domain
 
-import alektas.gamesheap.common.ErrorCode
-import alektas.gamesheap.data.entities.GameInfo
+import alektas.gamesheap.common.domain.entities.ErrorCode
+import alektas.gamesheap.common.data.entities.GameInfo
 
 sealed class GameDetailsState {
     object Loading : GameDetailsState()

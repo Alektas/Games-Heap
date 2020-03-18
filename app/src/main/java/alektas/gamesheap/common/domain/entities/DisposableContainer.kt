@@ -1,4 +1,4 @@
-package alektas.gamesheap.common
+package alektas.gamesheap.common.domain.entities
 
 /**
  * Disposable event that returns containing value only once.

@@ -1,8 +1,8 @@
 package alektas.gamesheap.main.ui
 
 import alektas.gamesheap.App
-import alektas.gamesheap.common.DisposableContainer
-import alektas.gamesheap.common.Processor
+import alektas.gamesheap.common.domain.entities.DisposableContainer
+import alektas.gamesheap.common.ui.Processor
 import alektas.gamesheap.main.domain.MainAction
 import alektas.gamesheap.main.domain.MainEvent
 import alektas.gamesheap.common.domain.Repository
@@ -12,7 +12,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import javax.inject.Inject
 
-class ActivityViewModel : ViewModel(), Processor<MainEvent> {
+class ActivityViewModel : ViewModel(),
+    Processor<MainEvent> {
     @Inject lateinit var repository: Repository
     private val _actions = MutableLiveData<MainAction>()
     val actions: LiveData<MainAction>
@@ -31,8 +32,11 @@ class ActivityViewModel : ViewModel(), Processor<MainEvent> {
     private fun searchGames(query: String) {
         if (query.isEmpty()) return
         applyAction(
-            MainAction.Navigate(DisposableContainer(
-                MainAction.Navigate.SEARCH)))
+            MainAction.Navigate(
+                DisposableContainer(
+                    MainAction.Navigate.SEARCH
+                )
+            ))
         SearchUseCase(repository).execute(query)
     }
 

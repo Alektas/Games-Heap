@@ -2,7 +2,7 @@ package alektas.gamesheap.filter.ui
 
 import alektas.gamesheap.BuildConfig
 import alektas.gamesheap.R
-import alektas.gamesheap.common.domain.*
+import alektas.gamesheap.common.domain.entities.*
 import alektas.gamesheap.utils.StringUtils
 import android.content.DialogInterface
 import android.os.Bundle

@@ -1,6 +1,5 @@
 package alektas.gamesheap.utils
 
-import alektas.gamesheap.data.entities.Platform
 import android.util.Log
 
 class StringUtils {

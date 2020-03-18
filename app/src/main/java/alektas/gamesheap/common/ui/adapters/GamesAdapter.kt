@@ -1,8 +1,8 @@
 package alektas.gamesheap.common.ui.adapters
 
 import alektas.gamesheap.R
-import alektas.gamesheap.data.entities.GameInfo
-import alektas.gamesheap.data.entities.getAbbreviations
+import alektas.gamesheap.common.data.entities.GameInfo
+import alektas.gamesheap.common.data.entities.getAbbreviations
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup

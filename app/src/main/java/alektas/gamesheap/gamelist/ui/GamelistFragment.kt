@@ -3,7 +3,7 @@ package alektas.gamesheap.gamelist.ui
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import alektas.gamesheap.R
-import alektas.gamesheap.common.ErrorCode
+import alektas.gamesheap.common.domain.entities.ErrorCode
 import alektas.gamesheap.common.ui.ViewContract
 import alektas.gamesheap.filter.ui.FiltersDialog
 import alektas.gamesheap.gamedetails.ui.GameFragment
@@ -15,7 +15,6 @@ import android.view.*
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding3.recyclerview.scrollEvents
 import io.reactivex.Observable
 import io.reactivex.disposables.CompositeDisposable
@@ -24,7 +23,8 @@ import kotlinx.android.synthetic.main.content_gamelist.*
 
 const val GAMELIST_FRAGMENT_TAG = "GamelistFragment"
 
-class GamelistFragment : Fragment(), ViewContract<GamelistEvent> {
+class GamelistFragment : Fragment(),
+    ViewContract<GamelistEvent> {
     private val viewModel by viewModels<GamelistViewModel>()
     private lateinit var gamesAdapter: GamesAdapter
     private val disposables = CompositeDisposable()

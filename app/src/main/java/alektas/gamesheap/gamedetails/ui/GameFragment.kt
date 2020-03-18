@@ -7,9 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 
 import alektas.gamesheap.R
-import alektas.gamesheap.common.ErrorCode
-import alektas.gamesheap.data.entities.GameInfo
-import alektas.gamesheap.data.entities.getFullNames
+import alektas.gamesheap.common.domain.entities.ErrorCode
+import alektas.gamesheap.common.data.entities.GameInfo
+import alektas.gamesheap.common.data.entities.getFullNames
 import alektas.gamesheap.gamedetails.domain.GameDetailsEvent
 import alektas.gamesheap.gamedetails.domain.GameDetailsState
 import alektas.gamesheap.gamelist.ui.GamelistFragment

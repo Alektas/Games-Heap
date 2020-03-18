@@ -1,8 +1,8 @@
-package alektas.gamesheap.data
+package alektas.gamesheap.common.data
 
-import alektas.gamesheap.data.entities.GameInfo
-import alektas.gamesheap.data.remote.Response
-import alektas.gamesheap.common.domain.Filter
+import alektas.gamesheap.common.data.entities.GameInfo
+import alektas.gamesheap.common.data.remote.Response
+import alektas.gamesheap.common.domain.entities.Filter
 import io.reactivex.Observable
 import io.reactivex.Single
 

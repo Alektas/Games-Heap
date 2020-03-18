@@ -1,4 +1,4 @@
-package alektas.gamesheap.common.domain
+package alektas.gamesheap.common.domain.entities
 
 import alektas.gamesheap.BuildConfig
 

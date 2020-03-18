@@ -1,6 +1,6 @@
-package alektas.gamesheap.data.remote.api
+package alektas.gamesheap.common.data.remote.api
 
-import alektas.gamesheap.data.entities.GameInfo
+import alektas.gamesheap.common.data.entities.GameInfo
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 

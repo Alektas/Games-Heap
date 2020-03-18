@@ -1,6 +1,6 @@
-package alektas.gamesheap.data.remote
+package alektas.gamesheap.common.data.remote
 
-import alektas.gamesheap.data.entities.GameInfo
+import alektas.gamesheap.common.data.entities.GameInfo
 
 sealed class Response {
 

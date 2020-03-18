@@ -1,7 +1,7 @@
 package alektas.gamesheap.filter.ui
 
 import alektas.gamesheap.App
-import alektas.gamesheap.common.domain.Filter
+import alektas.gamesheap.common.domain.entities.Filter
 import alektas.gamesheap.common.domain.Repository
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

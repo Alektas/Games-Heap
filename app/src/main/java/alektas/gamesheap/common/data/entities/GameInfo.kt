@@ -1,4 +1,4 @@
-package alektas.gamesheap.data.entities
+package alektas.gamesheap.common.data.entities
 
 import alektas.gamesheap.utils.StringUtils
 import com.google.gson.annotations.Expose
