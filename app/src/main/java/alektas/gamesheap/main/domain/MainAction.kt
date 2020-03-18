@@ -1,4 +1,4 @@
-package alektas.gamesheap.common.domain
+package alektas.gamesheap.main.domain
 
 import alektas.gamesheap.common.DisposableContainer
 

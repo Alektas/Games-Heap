@@ -1,8 +1,8 @@
-package alektas.gamesheap.common.ui
+package alektas.gamesheap.main.ui
 
 import alektas.gamesheap.*
-import alektas.gamesheap.common.domain.MainAction
-import alektas.gamesheap.common.domain.MainEvent
+import alektas.gamesheap.main.domain.MainAction
+import alektas.gamesheap.main.domain.MainEvent
 import alektas.gamesheap.gamelist.ui.GAMELIST_FRAGMENT_TAG
 import alektas.gamesheap.gamelist.ui.GamelistFragment
 import alektas.gamesheap.searchlist.ui.SEARCH_FRAGMENT_TAG

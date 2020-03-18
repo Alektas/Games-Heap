@@ -6,7 +6,7 @@
     android:id="@+id/gamelist_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".common.ui.MainActivity">
+    tools:context=".main.ui.MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/game_list"

@@ -1,6 +1,6 @@
 package alektas.gamesheap.di
 
-import alektas.gamesheap.common.ui.ActivityViewModel
+import alektas.gamesheap.main.ui.ActivityViewModel
 import alektas.gamesheap.data.remote.RemoteGamesSource
 import alektas.gamesheap.gamelist.ui.GamelistViewModel
 import alektas.gamesheap.filter.ui.FiltersViewModel

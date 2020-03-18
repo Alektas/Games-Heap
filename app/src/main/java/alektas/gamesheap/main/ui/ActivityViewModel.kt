@@ -1,10 +1,10 @@
-package alektas.gamesheap.common.ui
+package alektas.gamesheap.main.ui
 
 import alektas.gamesheap.App
 import alektas.gamesheap.common.DisposableContainer
 import alektas.gamesheap.common.Processor
-import alektas.gamesheap.common.domain.MainAction
-import alektas.gamesheap.common.domain.MainEvent
+import alektas.gamesheap.main.domain.MainAction
+import alektas.gamesheap.main.domain.MainEvent
 import alektas.gamesheap.common.domain.Repository
 import alektas.gamesheap.common.domain.usecases.SearchUseCase
 import androidx.lifecycle.LiveData
@@ -30,7 +30,9 @@ class ActivityViewModel : ViewModel(), Processor<MainEvent> {
 
     private fun searchGames(query: String) {
         if (query.isEmpty()) return
-        applyAction(MainAction.Navigate(DisposableContainer(MainAction.Navigate.SEARCH)))
+        applyAction(
+            MainAction.Navigate(DisposableContainer(
+                MainAction.Navigate.SEARCH)))
         SearchUseCase(repository).execute(query)
     }
 
