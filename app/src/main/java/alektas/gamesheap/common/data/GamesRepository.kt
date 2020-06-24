@@ -3,7 +3,7 @@ package alektas.gamesheap.common.data
 import alektas.gamesheap.BuildConfig
 import alektas.gamesheap.common.data.entities.GameInfo
 import alektas.gamesheap.common.data.remote.Response
-import alektas.gamesheap.common.domain.entities.Filter
+import alektas.gamesheap.filter.domain.entities.Filter
 import alektas.gamesheap.common.domain.Repository
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -31,9 +31,10 @@ class GamesRepository(var remoteSource: DataSource): Repository {
     }
 
     override fun applyFilter(filter: Filter) {
+        if (this.filter.value == filter) return
         if (BuildConfig.DEBUG) println("Apply filter: $filter")
-        this.filter.onNext(filter)
         remoteSource.applyFilter(filter)
+        this.filter.onNext(filter)
     }
 
     override fun getFilter(): Observable<Filter> {

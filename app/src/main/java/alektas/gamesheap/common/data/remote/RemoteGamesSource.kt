@@ -4,7 +4,7 @@ import alektas.gamesheap.App
 import alektas.gamesheap.BuildConfig
 import alektas.gamesheap.common.data.DataSourceAdapter
 import alektas.gamesheap.common.data.entities.GameInfo
-import alektas.gamesheap.common.domain.entities.Filter
+import alektas.gamesheap.filter.domain.entities.Filter
 import alektas.gamesheap.common.data.remote.api.GamesResponse
 import alektas.gamesheap.common.data.remote.api.GamesApi
 import io.reactivex.Observable
@@ -21,8 +21,7 @@ class RemoteGamesSource(private val apiKey: String) : DataSourceAdapter() {
     private val disposable = CompositeDisposable()
     private val gamesSource: PublishSubject<Response> = PublishSubject.create()
     private val searchSource: PublishSubject<Response> = PublishSubject.create()
-    private var filter: Filter =
-        Filter()
+    private var filter: Filter = Filter()
     private val fetchLimit = 15
     private var fetchOffset = 0
 
@@ -43,7 +42,7 @@ class RemoteGamesSource(private val apiKey: String) : DataSourceAdapter() {
                 apiKey,
                 offset = fetchOffset,
                 limit = fetchLimit,
-                filter = filter.toString()
+                filter = filter.toHttpString()
             )
             .map { response: GamesResponse ->
                 if (BuildConfig.DEBUG) println("Fetched games [response = $response]")
@@ -84,7 +83,7 @@ class RemoteGamesSource(private val apiKey: String) : DataSourceAdapter() {
 
     override fun applyFilter(filter: Filter) {
         this.filter = filter
-        fetchGames(true)
+        fetchOffset = 0
     }
 
     override fun getGames(): Observable<Response> {
@@ -97,5 +96,12 @@ class RemoteGamesSource(private val apiKey: String) : DataSourceAdapter() {
 
     private fun isError(message: String?): Boolean {
         return message != null && message != "OK"
+    }
+
+    private fun Filter.toHttpString(): String {
+        val platformsString =
+            if (platforms.isEmpty()) ""
+            else ",platforms:${platforms.joinToString(separator = "|")}"
+        return "original_release_date:$fromYear-1-1 00:00:00|${toYear + 1}-1-1 00:00:00$platformsString"
     }
 }

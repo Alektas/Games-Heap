@@ -1,27 +1,27 @@
 package alektas.gamesheap.filter.ui
 
-import alektas.gamesheap.BuildConfig
 import alektas.gamesheap.R
-import alektas.gamesheap.common.domain.entities.*
-import alektas.gamesheap.utils.StringUtils
+import alektas.gamesheap.common.ui.ViewContract
+import alektas.gamesheap.filter.domain.FilterEvent
+import alektas.gamesheap.filter.domain.FilterState
+import alektas.gamesheap.filter.domain.entities.*
 import android.content.DialogInterface
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.CompoundButton
-import android.widget.Toast
-import androidx.core.view.children
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.google.android.material.chip.Chip
+import com.jakewharton.rxbinding3.widget.textChanges
+import io.reactivex.Observable
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.plusAssign
 import kotlinx.android.synthetic.main.filters_gamelist.*
 
-class FiltersDialog : BottomSheetDialogFragment() {
-    private lateinit var viewModel: FiltersViewModel
+class FiltersDialog : BottomSheetDialogFragment(), ViewContract<FilterEvent> {
+    private val viewModel: FiltersViewModel by viewModels()
+    private val disposable = CompositeDisposable()
 
     companion object {
         const val TAG = "FiltersDialog"
@@ -39,112 +39,77 @@ class FiltersDialog : BottomSheetDialogFragment() {
         return inflater.inflate(R.layout.filters_gamelist, container, false)
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(FiltersViewModel::class.java)
-        loadFilterValues(viewModel)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        subscribeOn(viewModel)
+        disposable += events().subscribe { viewModel.process(it) }
     }
 
     override fun onCancel(dialog: DialogInterface) {
-        applyFilter(viewModel)
+        notifyClose()
+        disposable.clear()
         super.onCancel(dialog)
     }
 
-    private fun setupFilters(viewModel: FiltersViewModel) {
-        val filterListener = createFilterListener(viewModel)
+    override fun events(): Observable<FilterEvent> {
+        return Observable.merge(
+            games_filter_from_year.textChanges()
+                .map { FilterEvent.FromYear(it.toString()) },
+            games_filter_to_year.textChanges()
+                .map { FilterEvent.ToYear(it.toString()) }
+        )
+    }
 
-        games_filter_pc.setOnCheckedChangeListener(filterListener)
-        games_filter_ps4.setOnCheckedChangeListener(filterListener)
-        games_filter_xone.setOnCheckedChangeListener(filterListener)
-        games_filter_android.setOnCheckedChangeListener(filterListener)
-        games_filter_ios.setOnCheckedChangeListener(filterListener)
-
-        games_filter_from_year.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                viewModel.onChooseFromYear(StringUtils.parseInt(s.toString()))
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-        })
-
-        games_filter_to_year.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
-                viewModel.onChooseToYear(StringUtils.parseInt(s.toString()))
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-
-            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+    private fun subscribeOn(viewModel: FiltersViewModel) {
+        viewModel.state.observe(viewLifecycleOwner, Observer { state ->
+                if (state.isInitSettings) renderFilter(state.filter)
+                renderFromYearValidation(state.isValidFromYear)
+                renderToYearValidation(state.isValidToYear)
         })
     }
 
-    private fun createFilterListener(
-        viewModel: FiltersViewModel
-    ): CompoundButton.OnCheckedChangeListener {
+    private fun renderFilter(filter: Filter?) {
+        if (filter == null) return
 
-        return CompoundButton.OnCheckedChangeListener { btn, isChecked ->
-            run {
-                when (btn.id) {
-                    R.id.games_filter_pc -> viewModel.onChoosePlatform(PLATFORM_PC, isChecked)
-                    R.id.games_filter_ps4 -> viewModel.onChoosePlatform(PLATFORM_PS4, isChecked)
-                    R.id.games_filter_xone -> viewModel.onChoosePlatform(PLATFORM_XONE, isChecked)
-                    R.id.games_filter_android -> viewModel.onChoosePlatform(
-                        PLATFORM_ANDROID,
-                        isChecked
-                    )
-                    R.id.games_filter_ios -> viewModel.onChoosePlatform(PLATFORM_IOS, isChecked)
-                    else -> Toast.makeText(
-                        requireContext(),
-                        "Invalid platform",
-                        Toast.LENGTH_SHORT
-                    ).show()
+        filter.platforms.forEach { platform ->
+            games_filter_platforms.check(
+                when (platform) {
+                    PLATFORM_PC -> R.id.games_filter_pc
+                    PLATFORM_PS4 -> R.id.games_filter_ps4
+                    PLATFORM_XONE -> R.id.games_filter_xone
+                    PLATFORM_ANDROID -> R.id.games_filter_android
+                    PLATFORM_IOS -> R.id.games_filter_ios
+                    else -> 0
                 }
-            }
-        }
-    }
-
-    private fun loadFilterValues(viewModel: FiltersViewModel) {
-        if (BuildConfig.DEBUG) println("FiltersDialog.loadFilterValues: VM = $viewModel")
-
-        viewModel.filter.observe(viewLifecycleOwner, Observer { filter ->
-            if (BuildConfig.DEBUG) println("Load filter to dialog: $filter")
-            filter.getPlatforms().forEach {
-                games_filter_platforms.check(
-                    when (it) {
-                        PLATFORM_PC -> R.id.games_filter_pc
-                        PLATFORM_PS4 -> R.id.games_filter_ps4
-                        PLATFORM_XONE -> R.id.games_filter_xone
-                        PLATFORM_ANDROID -> R.id.games_filter_android
-                        PLATFORM_IOS -> R.id.games_filter_ios
-                        else -> 0
-                    }
-                )
-            }
-
-            games_filter_from_year.setText(filter.fromYear.toString())
-            games_filter_to_year.setText(filter.toYear.toString())
-        })
-    }
-
-    private fun applyFilter(viewModel: FiltersViewModel) {
-        val filter = Filter()
-
-        games_filter_platforms.children.forEach {
-            if ((it as Chip).isChecked) filter.addPlatform(when (it.id) {
-                R.id.games_filter_pc -> PLATFORM_PC
-                R.id.games_filter_ps4 -> PLATFORM_PS4
-                R.id.games_filter_xone -> PLATFORM_XONE
-                R.id.games_filter_android -> PLATFORM_ANDROID
-                R.id.games_filter_ios -> PLATFORM_IOS
-                else -> 0
-            })
+            )
         }
 
-        filter.fromYear = StringUtils.parseInt(games_filter_from_year.text.toString())
-        filter.toYear = StringUtils.parseInt(games_filter_to_year.text.toString())
-
-        viewModel.applyFilter(filter)
+        games_filter_from_year.setText(filter.fromYear.toString())
+        games_filter_to_year.setText(filter.toYear.toString())
     }
+
+    private fun renderFromYearValidation(isValid: Boolean) {
+        games_filter_from_year_layout.error =
+            if (isValid) null else getString(R.string.error_invalid_from_year)
+    }
+
+    private fun renderToYearValidation(isValid: Boolean) {
+        games_filter_to_year_layout.error =
+            if (isValid) null else getString(R.string.error_invalid_to_year)
+    }
+
+    private fun notifyClose() {
+        val fromYear = games_filter_from_year.text.toString()
+        val toYear = games_filter_to_year.text.toString()
+
+        val platforms = HashMap<Int, Boolean>()
+        platforms[PLATFORM_PC] = games_filter_pc.isChecked
+        platforms[PLATFORM_PS4] = games_filter_ps4.isChecked
+        platforms[PLATFORM_XONE] = games_filter_xone.isChecked
+        platforms[PLATFORM_ANDROID] = games_filter_android.isChecked
+        platforms[PLATFORM_IOS] = games_filter_ios.isChecked
+
+        viewModel.process(FilterEvent.Close(platforms, fromYear, toYear))
+    }
+
 }

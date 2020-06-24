@@ -1,6 +1,6 @@
 package alektas.gamesheap.common.data.entities
 
-import alektas.gamesheap.utils.StringUtils
+import alektas.gamesheap.common.utils.Parser
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
@@ -36,7 +36,7 @@ class GameInfo {
     @Expose
     val releaseYear: Int? = null
         get() {
-            if (field == null && releaseDate != null) return StringUtils.parseYear(releaseDate)
+            if (field == null && releaseDate != null) return Parser.parseYearFromDate(releaseDate)
             return field
         }
     @SerializedName("original_release_date")

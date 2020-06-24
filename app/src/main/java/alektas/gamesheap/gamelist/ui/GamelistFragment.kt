@@ -17,9 +17,11 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.jakewharton.rxbinding3.recyclerview.scrollEvents
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import kotlinx.android.synthetic.main.content_gamelist.*
+import java.util.concurrent.TimeUnit
 
 const val GAMELIST_FRAGMENT_TAG = "GamelistFragment"
 
@@ -68,7 +70,9 @@ class GamelistFragment : Fragment(),
         super.onViewCreated(view, savedInstanceState)
         gamesAdapter = GamesAdapter()
         setupGamelist(requireContext(), gamesAdapter)
-        disposables += events().subscribe { viewModel.process(it) }
+        disposables += events()
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe { viewModel.process(it) }
         subscribeOn(viewModel)
     }
 
@@ -85,7 +89,9 @@ class GamelistFragment : Fragment(),
     override fun events(): Observable<GamelistEvent> {
         return Observable.merge(
             gamesAdapter.gameClicks.map { GamelistEvent.SelectGame(it) },
-            game_list.scrollEvents().map {
+            game_list.scrollEvents()
+                .debounce(100L, TimeUnit.MILLISECONDS)
+                .map {
                 GamelistEvent.Scroll(
                     it.view.layoutManager!!.itemCount,
                     (it.view.layoutManager as LinearLayoutManager).findLastVisibleItemPosition()

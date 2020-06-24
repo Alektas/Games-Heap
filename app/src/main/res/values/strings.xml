@@ -13,8 +13,8 @@ Vestibulum vehicula risus tristique eros dapibus rhoncus. Fusce fringilla erat u
 Etiam ut eros volutpat, faucibus quam sit amet, viverra libero. Suspendisse finibus ut turpis in pharetra. Duis et mauris sollicitudin sem fermentum tempus in non justo. Fusce tincidunt enim bibendum, bibendum lacus a, viverra tellus. Fusce varius turpis nec risus condimentum, ac vehicula felis pulvinar. Donec a consequat nunc. Proin vulputate cursus egestas. Fusce commodo feugiat placerat. Donec rhoncus rhoncus odio, ac euismod lacus volutpat a. Mauris lorem ligula, faucibus vitae cursus in, maximus eu urna. Suspendisse potenti. Vestibulum pharetra viverra sapien venenatis mattis. Quisque id suscipit odio. Morbi sed neque augue. Integer euismod enim nisl, eu interdum odio aliquet et. Proin pretium vitae tortor at egestas.
 Proin cursus tellus euismod metus mollis, et viverra risus pharetra. Nullam consequat maximus dignissim. Donec ac elit eu leo ornare malesuada vel id magna. Cras in neque vitae elit ornare sagittis. Donec fringilla velit in dictum placerat. Quisque quis erat leo. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Pellentesque faucibus, orci eu dapibus tristique, libero lacus facilisis tellus, a condimentum magna libero eget nisi. Praesent gravida porta accumsan. Fusce sollicitudin erat vitae fermentum hendrerit. Curabitur scelerisque aliquam mi vel mattis.</string>
 
-    <string name="from_year_filter">From</string>
-    <string name="to_year_filter">To</string>
+    <string name="from_year_filter">From year</string>
+    <string name="to_year_filter">To year</string>
     <string name="action_filters">Filter</string>
     <string name="action_search">Search</string>
     <string name="search_hint">Search game</string>
@@ -29,5 +29,7 @@ Proin cursus tellus euismod metus mollis, et viverra risus pharetra. Nullam cons
     <string name="gamelist_placeholder_text">No games</string>
     <string name="error_failed_to_load_game">Failed to load game. Check your Internet connection.</string>
     <string name="searchlist_placeholder_text">No games found</string>
+    <string name="error_invalid_from_year">Field should be lesser than \"To year\"</string>
+    <string name="error_invalid_to_year">Field should be greater than \"From year\"</string>
 
 </resources>

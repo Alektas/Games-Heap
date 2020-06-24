@@ -87,3 +87,6 @@ lint/outputs/
 lint/tmp/
 # lint/reports/
 /.idea/statistic.xml
+/.idea/kotlinc.xml
+/.idea/inspectionProfiles/profiles_settings.xml
+/.idea/jarRepositories.xml

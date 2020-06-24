@@ -1,8 +1,8 @@
 package alektas.gamesheap.common.domain
 
-import alektas.gamesheap.common.domain.entities.Filter
-import alektas.gamesheap.common.domain.entities.PLATFORM_ANDROID
-import alektas.gamesheap.common.domain.entities.PLATFORM_IOS
+import alektas.gamesheap.filter.domain.entities.Filter
+import alektas.gamesheap.filter.domain.entities.PLATFORM_ANDROID
+import alektas.gamesheap.filter.domain.entities.PLATFORM_IOS
 import org.junit.Test
 
 import org.junit.Assert.*

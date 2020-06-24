@@ -2,7 +2,6 @@
 <androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/filters_gamelist"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -11,8 +10,7 @@
     android:padding="@dimen/margin_vertical_basic"
     app:behavior_hideable="true"
     app:behavior_peekHeight="0dp"
-    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
-    tools:showIn="@layout/content_gamelist">
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <com.google.android.material.chip.ChipGroup
         android:id="@+id/games_filter_platforms"
@@ -66,34 +64,40 @@
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/games_filter_from_year_layout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_vertical_basic"
+        android:layout_marginEnd="8dp"
         android:hint="@string/from_year_filter"
+        app:errorEnabled="true"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/games_filter_to_year_layout"
         app:layout_constraintTop_toBottomOf="@id/games_filter_platforms">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/games_filter_from_year"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="4"
             android:inputType="number" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/games_filter_to_year_layout"
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_vertical_basic"
         android:layout_marginBottom="@dimen/margin_vertical_basic"
         android:hint="@string/to_year_filter"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/games_filter_from_year_layout">
+        app:errorEnabled="true"
+        app:layout_constraintStart_toEndOf="@id/games_filter_from_year_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/games_filter_platforms">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/games_filter_to_year"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="4"
             android:inputType="number" />
